@@ -44,9 +44,9 @@ tickets.update_one( {'status':0}, {'$set': {'status':-1, 'by': message.chat.id}}
 db_passages = {
   "text" : "ла-ла-ла-ла-ла-ла-ла-ла",
   "book_name" : "Тестовая Книга",
-  "if_telegraph_url": true,
-  "telegraph_url": "https://test.com/book.pdf",
-  "if_audio_auth": true,
-  "audio_auth": "D:/Audio_bot/book_la-la-la-la.mp3",
-  ""
+  "telegraph_url" : "https://test.com/test.pdf",
+  "if_audio": true,
+  "audio_path": "D:/Document/book/audio.mp3",
+  "photo_path": "D:/Document/book/photo.png"
+
 }
