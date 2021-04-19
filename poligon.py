@@ -12,6 +12,7 @@ db_passagese = db['passages']
 db_passages = {
   "id": config['number']+1,
   "text" : "ла-ла-ла-ла-ла-ла-ла-ла",
+  "brief": "абзац",
   "passages_name" : "Тестовая Книга",
   "telegraph_url" : "https://test.com/test.pdf",
   "audio_path": "D:/Document/book/audio.mp3",
@@ -26,3 +27,6 @@ with open("config.json", "w") as write_file:
     json.dump(config, write_file, indent=4)
 
 print(str(db_passagese.insert_one(db_passages).inserted_id))
+
+
+print(db_passagese.find_one({"id":3}))

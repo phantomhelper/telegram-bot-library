@@ -42,11 +42,12 @@ tickets.update_one( {'status':0}, {'$set': {'status':-1, 'by': message.chat.id}}
 
 
 db_passages = {
+  "id": config['number']+1,
   "text" : "ла-ла-ла-ла-ла-ла-ла-ла",
-  "book_name" : "Тестовая Книга",
+  "passages_name" : "Тестовая Книга",
   "telegraph_url" : "https://test.com/test.pdf",
-  "if_audio": true,
   "audio_path": "D:/Document/book/audio.mp3",
-  "photo_path": "D:/Document/book/photo.png"
-
+  "photo_path": "D:/Document/book/photo.png",
+  "genre": "тестирование",
+  "rating": 0
 }
