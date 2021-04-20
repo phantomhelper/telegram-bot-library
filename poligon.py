@@ -16,7 +16,7 @@ db_passages = {
   "passages_name" : "Тестовая Книга",
   "telegraph_url" : "https://test.com/test.pdf",
   "audio_path": "D:/Document/book/audio.mp3",
-  "photo_path": "D:/Document/book/photo.png",
+  "photo_path": None,
   "genre": "тестирование",
   "rating": 0
 }

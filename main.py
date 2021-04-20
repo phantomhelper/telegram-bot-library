@@ -17,11 +17,11 @@ db_users = db['users'] # NOTE: База по пользователям
 db_passagese = db['passages'] # NOTE: База по отрывкам
 db_users_shelf = db['users_shelf'] # NOTE: База по личным полкам
 
-__bot_token__ = '1021184353:AAFQS9aISkFHb9oZ4KBD3xGzu6pxtD-eccI'
+__bot_token__ = config['token']
 __root__ = 460994316
 admins = [460994316]
 
-time_day = '09:00' # NOTE: Утренее время для отправки отрывков
+time_day = str(time.strftime("%H:%M", time.localtime())) # NOTE: Утренее время для отправки отрывков
 time_night = '20:00' # NOTE: Вечернее время для отправки отрывков
 
 welcome_message = """Welcome!
@@ -33,8 +33,10 @@ print(str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
 
 def random_passage():
     random_passage_data = db_passagese.find_one({"id": random.randint(1, config['users'])})
-    text = "Доброго времени суток!\nВремя интересного абзаца...\n\n" + str(random_passage_data['brief'])
-    return text
+    """if random_passage_data['photo_path'] != None:
+
+    text = random_passage_data['brief'] + "\n\n" + random_passage_data['telegraph_url']"""
+    return random_passage_data
 
 
 def daily_messages():
@@ -43,12 +45,26 @@ def daily_messages():
     while True:
         if str(time.strftime("%H:%M", time.localtime())) == time_day:
             for i in range( config['users'] ):
-                bot.send_message(config['users'][i], random_passage())
+                data_daily_messages = random_passage()
+                if data_daily_messages['photo_path'] != None:
+                    photo = open(data_daily_messages['photo_path'], 'rb')
+                    bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+
+                elif data_daily_messages['audio_path'] != None:
+                    photo = open(data_daily_messages['photo_path'], 'rb')
+                    bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
             time.sleep(60)
 
         elif str(time.strftime("%H:%M", time.localtime())) == time_night:
             for i in range( config['users'] ):
-                bot.send_message(__root__, random_passage())
+                data_daily_messages = random_passage()
+                if data_daily_messages['photo_path'] != None:
+                    photo = open(data_daily_messages['photo_path'], 'rb')
+                    bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+
+                elif data_daily_messages['audio_path'] != None:
+                    photo = open(data_daily_messages['photo_path'], 'rb')
+                    bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
             time.sleep(60)
 
         time.sleep(5)
