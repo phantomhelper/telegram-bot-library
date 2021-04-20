@@ -32,10 +32,11 @@ bot = telebot.TeleBot(__bot_token__)
 print(str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
 
 def random_passage():
-    random_passage_data = db_passagese.find_one({"id": random.randint(1, config['users'])})
+    random_passage_data = db_passagese.find_one({"id": random.randint(1, config['number'])})
     """if random_passage_data['photo_path'] != None:
 
     text = random_passage_data['brief'] + "\n\n" + random_passage_data['telegraph_url']"""
+    print(random_passage_data)
     return random_passage_data
 
 
@@ -51,8 +52,9 @@ def daily_messages():
                     bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
 
                 elif data_daily_messages['audio_path'] != None:
-                    photo = open(data_daily_messages['photo_path'], 'rb')
-                    bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+                    audio  = open(data_daily_messages['audio_path'], 'rb')
+                    bot.send_audio(__root__, audio, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+                time.sleep(0.2)
             time.sleep(60)
 
         elif str(time.strftime("%H:%M", time.localtime())) == time_night:
@@ -63,8 +65,9 @@ def daily_messages():
                     bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
 
                 elif data_daily_messages['audio_path'] != None:
-                    photo = open(data_daily_messages['photo_path'], 'rb')
-                    bot.send_photo(__root__, photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+                    audio  = open(data_daily_messages['audio_path'], 'rb')
+                    bot.send_audio(__root__, audio, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+                time.sleep(0.2)
             time.sleep(60)
 
         time.sleep(5)
