@@ -58,3 +58,41 @@
 
 
 отдельная бд, что юзер смотрит и сделать реакцию на + и -, моя полка
+
+
+
+
+j = 1
+      for i in range( config['users'] ):
+          data_daily_messages = random_passage()
+          if data_daily_messages['photo_path'] != None:
+              photo = open(data_daily_messages['photo_path'], 'rb')
+              j = 1
+              while j >= config['users']:
+                  print(j)
+                  daily_messages_day_id = db_users.find_one({ "id" : j })
+                  print('# DEBUG: ' + str(daily_messages_day_id))
+                  mid_p = bot.send_photo(daily_messages_day_id['tid'], photo, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+
+                  data = {
+                      "mid" : mid_p.message_id,
+                      "title" : data_daily_messages['text'],
+                      "id" : data_daily_messages['id']
+                  }
+                  db_messages.insert_one(data)
+                  db_users.update_one( {'tid': daily_messages_day_id['tid'] }, {'$set': { 'last_passage': data_daily_messages['id'] }} )
+                  j+=1
+
+          elif data_daily_messages['audio_path'] != None:
+              audio  = open(data_daily_messages['audio_path'], 'rb')
+              mid_a = bot.send_audio(__root__, audio, caption = data_daily_messages['brief'] + "\n\n" + str(data_daily_messages['telegraph_url']))
+              data = {
+                  "mid" : mid_a.message_id,
+                  "title" : data_daily_messages['text'],
+                  "id" : data_daily_messages['id']
+              }
+              db_messages.insert_one(data)
+              db_users.update_one( {'tid': __root__ }, {'$set': { 'last_passage': data_daily_messages['id'] }} )
+
+          time.sleep(0.2)
+      time.sleep(60)
