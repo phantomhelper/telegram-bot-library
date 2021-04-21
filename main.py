@@ -29,7 +29,7 @@ time_night = '20:00' # NOTE: Вечернее время для отправки
 
 menu_my_shelf_markup = types.ReplyKeyboardMarkup()
 menu_my_shelf = 'Моя полка 📚'
-menu.add(my_shelf)
+menu.add(menu_my_shelf)
 
 welcome_message = """Welcome!
 In the process..."""
