@@ -27,9 +27,9 @@ admins = [460994316]
 time_day = str(time.strftime("%H:%M", time.localtime())) # NOTE: Утренее время для отправки отрывков
 time_night = '20:00' # NOTE: Вечернее время для отправки отрывков
 
-menu_my_shelf_markup = types.ReplyKeyboardMarkup()
+menu_markup = types.ReplyKeyboardMarkup()
 menu_my_shelf = 'Моя полка 📚'
-menu.add(menu_my_shelf)
+menu_markup.add(menu_my_shelf)
 
 welcome_message = """Welcome!
 In the process..."""
