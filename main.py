@@ -157,7 +157,13 @@ def rating_up(message):
         db_passages.update_one( {'id': rating_up_data['last_passage'] }, {'$set': { 'rating': rating_up_passage_book['rating']-1 }} )
         bot.send_message(message.chat.id, 'Спасибо!\nБудем стараться подобрать Вам подходящие рассказы!')
 
-
+@bot.message_handler(regexp = markup_my)
+def my_shelf(message):
+    if message.reply_to_message.message_id != None:
+        buff_tid = db_users.find_one({ "tid" : message.chat.id })
+        rating_up_id = db_messages.find_one({ "mid": message.reply_to_message.message_id }) # NOTE: Копируем Telegram ID сообщение
+        buff = db_messages.find_one({ "mid": rating_up_id['mid'] }) # NOTE: переводим в buff данные об этом Telegram Message ID
+        
 
 @bot.message_handler(regexp="k")
 def test_test(message):
