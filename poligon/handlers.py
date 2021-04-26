@@ -1,16 +1,14 @@
 from main import bot, dp
-
 from aiogram.types import Message
-from config import admin_id
+from config import root
 
-async def send_to_admin(dp):
-    await bot.send_message(chat_id=admin_id, text='Бот запущен\.')
+async def send_to_root_startup(dp):
+    await bot.send_message(chat_id=root, text="✅ up")
 
+async def send_to_root_shutdown(dp):
+    await bot.send_message(chat_id=root, text="⛔️ down")
 
 @dp.message_handler()
 async def echo(message: Message):
-    text = f"Привет, ты написал: {message.text}"
-    await bot.send_message(chat_id=message.chat.id,
-                           text=text)
+    text = f"ты написал {message.text}"
     await message.answer(text=text)
-    print(message.chat.id)
