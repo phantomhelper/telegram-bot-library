@@ -13,3 +13,5 @@ __all__ - list of parametrs which will be imported from a module
 - - - - -
 .filters - a filter and where message will go
 .handlers
+
+import dp from loader
