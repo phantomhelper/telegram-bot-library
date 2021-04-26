@@ -1,14 +1,17 @@
-from  aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from keyboards.inline.callback_data import rating_callback
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 rating = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text="1", callback_data="test:one"),
-            InlineKeyboardButton(text="2", callback_data="test:two")
-        ],
-        [
-            InlineKeyboardButton(text="3", callback_data="test:three")
+#            InlineKeyboardButton(text="Читать полностью", url="google.com")
+#        ],
+#        [
+            InlineKeyboardButton(text="👎", callback_data="rating:down"),
+            InlineKeyboardButton(text="❤️", callback_data="rating:add"),
+            InlineKeyboardButton(text="👍", callback_data="rating:up")
+
         ]
     ]
 )
+
+# 👎❤️👍
