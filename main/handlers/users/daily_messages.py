@@ -2,10 +2,11 @@ import json, random
 from loader import dp
 from aiogram.types import Message
 from aiogram.types import CallbackQuery
-from loader import db_passagese, db_messages
+from loader import db_passagese, db_messages, db_users_shelf
 from aiogram.dispatcher.filters import Command
 #from keyboards.inline.rating_buttons import rating, random_passage
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from keyboards.default.menu import menu
 
 def _random_passage():
 
@@ -30,17 +31,7 @@ def _random_passage():
 
 # 👎❤️👍
 
-@dp.message_handler(Command("radnom"))
-async def show_items(message: Message):
-    buff = _random_passage()
-    text=f"""<i>{buff[0]['brief']}</i>"""
-    message_id = await message.answer(f"<b>Вот рандомный абзац :</b>\n{text}", reply_markup=buff[1])
-    data = {
-    "mid" : message_id['message_id'],
-    "title" : buff[0]['text'],
-    "id" : buff[0]['id']
-    }
-    db_messages.insert_one(data)
+
 
 
 @dp.callback_query_handler(text="rating:up")
@@ -49,18 +40,25 @@ async def rating_up(call: CallbackQuery):
     random_passage_id = db_messages.find_one({ "mid" : call.message.message_id })['id']
     random_passage = db_passagese.find_one({ "id" : random_passage_id })
     db_passagese.update_one( {'id': random_passage['id'] }, {'$set': { 'rating': random_passage['rating']+1 }} )
-
-
-
+    await call.message.answer(text="Спасибо за оценку!")
 
 @dp.callback_query_handler(text="rating:down")
 async def rating_up(call: CallbackQuery):
     await call.answer(cache_time=60)
-    await call.message.answer("down copy")
+    random_passage_id = db_messages.find_one({ "mid" : call.message.message_id })['id']
+    random_passage = db_passagese.find_one({ "id" : random_passage_id })
+    db_passagese.update_one( {'id': random_passage['id'] }, {'$set': { 'rating': random_passage['rating']-1 }} )
+    await call.message.answer(text="Спасибо за оценку!")
 
 @dp.callback_query_handler(text="rating:add")
 async def rating_up(call: CallbackQuery):
     await call.answer(cache_time=60)
-    await call.message.answer("add copy")
+    user_shelf = call.message.chat.id
+    number = db_users_shelf.user_shelf.find().count()
+    print(number)
+    """data = {
+        "tid" : call.message.chat.id,
+        "id" :
+    }"""
 
 # NOTE: сначала ищем ID рассказа в db_msg, далее добавляем туда рейтинг
