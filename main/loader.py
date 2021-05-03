@@ -14,3 +14,5 @@ db_users = db['users'] # NOTE: База по пользователям
 db_passagese = db['passages'] # NOTE: База по отрывкам
 db_users_shelf = db['users_shelf'] # NOTE: База по личным полкам
 db_messages = db['messages'] # NOTE: База с MID и отрывками
+
+db_users_db = client['users_shelf']

@@ -3,9 +3,30 @@ import string
 import random
 from aiogram import types
 from keyboards.default import menu
-from loader import dp, bot, db_users
-from aiogram.types import CallbackQuery
+from loader import dp, bot, db_users, db_passagese, db_messages, db_users_shelf
 from aiogram.dispatcher.filters.builtin import CommandStart
+from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
+
+def _random_passage():
+
+    with open('config.json', 'r', encoding="utf8") as f:
+        config = json.load(f)
+
+    random_passage_id = random.randint(1,config['number'])
+    random_passage = db_passagese.find_one({ "id" : random_passage_id })
+
+    rating = InlineKeyboardMarkup(
+        inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Читать полностью", url=random_passage['telegraph_url'])
+        ],
+        [
+            InlineKeyboardButton(text="👎", callback_data="rating:down"),
+            InlineKeyboardButton(text="❤️", callback_data="rating:add"),
+            InlineKeyboardButton(text="👍", callback_data="rating:up")
+        ]
+    ])
+    return random_passage, rating
 
 def get_random_string():
     # choose from all lowercase letter
@@ -42,14 +63,21 @@ async def bot_start(message: types.Message):
         with open("config.json", "w") as write_file:
             json.dump(config, write_file, indent=4)
 
-@dp.callback_query_handler(text="menu:random")
-async def user_random_passage(call: CallbackQuery):
+@dp.message_handler(text="Мне повезет ⭐️")
+async def user_random_passage(message: Message):
     buff = _random_passage()
     text=f"""<i>{buff[0]['brief']}</i>"""
-    message_id = await call.message.answer(f"<b>{text}</b>", reply_markup=buff[1])
+    message_id = await message.answer(f"<b>{text}</b>", reply_markup=buff[1])
     data = {
     "mid" : message_id['message_id'],
     "title" : buff[0]['text'],
     "id" : buff[0]['id']
     }
     db_messages.insert_one(data)
+
+@dp.message_handler(text="Полка 📚")
+async def my_shelf(message: Message):
+    tid = message.chat.id
+    shelf = db_users_shelf.find({ "tid" : tid })
+    shelf_num = shelf.count()
+    await message.answer(f"У вас на полке {shelf_num} книг.")
