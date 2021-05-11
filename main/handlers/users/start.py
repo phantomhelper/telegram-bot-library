@@ -80,4 +80,11 @@ async def my_shelf(message: Message):
     tid = message.chat.id
     shelf = db_users_shelf.find({ "tid" : tid })
     shelf_num = shelf.count()
-    await message.answer(f"У вас на полке {shelf_num} книг.")
+    shelf_menu = InlineKeyboardMarkup(row_width=1)
+    i = 0
+    while i < shelf_num:
+        passage = db_passagese.find_one({"id" : shelf[i]['passage_id']})
+        button = InlineKeyboardButton(text=passage['text'], callback_data=passage['id'])
+        shelf_menu.insert(button)
+        i+=1
+    await message.answer(f"Вот что я нашел:", reply_markup = shelf_menu)
