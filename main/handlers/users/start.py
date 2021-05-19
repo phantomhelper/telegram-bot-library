@@ -1,11 +1,16 @@
+import time
 import json
 import string
 import random
 from aiogram import types
+from threading import Thread
 from keyboards.default import menu
-from loader import dp, bot, db_users, db_passagese, db_messages, db_users_shelf
 from aiogram.dispatcher.filters.builtin import CommandStart
+from loader import dp, bot, db_users, db_passagese, db_messages, db_users_shelf
 from aiogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
+
+with open('config.json', 'r', encoding="utf8") as f:
+    config = json.load(f)
 
 def _random_passage():
 
@@ -35,9 +40,6 @@ def get_random_string():
     result_str = ''.join(random.choice(letters) for i in range(length))
     result_str = ''.join(choice((str.upper, str.lower))(c) for c in result_str)
     return result_str
-
-with open('config.json', 'r', encoding="utf8") as f:
-    config = json.load(f)
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):

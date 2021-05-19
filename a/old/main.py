@@ -100,9 +100,6 @@ def daily_messages():
                 j+=1
             time.sleep(60)
 
-
-
-
 @bot.message_handler(commands=['start', 'restart'])
 def start(message):
     if db_users.find_one( {"tid": message.chat.id} ) == None:
