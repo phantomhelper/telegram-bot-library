@@ -16,7 +16,7 @@ with open('config.json', 'r', encoding="utf8") as f:
     config = json.load(f)
 
 time_day = '09:00'
-#time_day = str(time.strftime("%H:%M", time.localtime())) # NOTE: ONLY FOR TESTS; TURN OFF 
+#time_day = str(time.strftime("%H:%M", time.localtime())) # NOTE: ONLY FOR TESTS; TURN OFF
 time_night = '20:00'
 
 async def daily_messages():
@@ -44,5 +44,5 @@ async def daily_messages():
 
 
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(daily_messages())
+"""loop = asyncio.get_event_loop()
+loop.run_until_complete(daily_messages())"""

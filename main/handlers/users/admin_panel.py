@@ -1,9 +1,10 @@
-from loader import db_passagese, dp
-from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters.state import State, StatesGroup
-from aiogram.types import Message
 import json
 import datetime
+from aiogram.types import Message
+from loader import db_passagese, dp
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Command
+from aiogram.dispatcher.filters.state import State, StatesGroup
 
 admins = [460994316]
 
@@ -13,7 +14,33 @@ with open('config.json', 'r', encoding="utf8") as f:
     config = json.load(f)
 buff_id = config['number']
 
-class passage(StatesGroup):
+class Test(StatesGroup):
+    Q1=State()
+    Q2=State()
+
+@dp.message_handler(Command("test"), state=None)
+async def enter_test(message: Message):
+    await message.answer("Как вас зовут?")
+    await Test.Q1.set()
+
+@dp.message_handler(state=Test.Q1)
+async def answer_q1(message: Message, state: FSMContext):
+    answer = message.text
+    await state.update_data(answer1=answer)
+    await message.answer("Возраст:")
+    await Test.next()
+
+@dp.message_handler(state=Test.Q2)
+async def answer_q2(message: Message, state: FSMContext):
+    answer2=message.text
+    data = await state.get_data()
+    answer1=data.get("answer1")
+    answer2=message.text
+    await message.answer(f"+OK\n{answer1}\n{answer2}")
+    await state.finish()
+
+
+"""class passage(StatesGroup):
     title = State()
     brief = State()
     telegraph_url = State()
@@ -21,16 +48,22 @@ class passage(StatesGroup):
     photo_path = State()
     genre = State()
 
-@dp.message_handler(commands=['add'], state="*")
+@dp.message_handler(commands=['add'])
 async def add_title(message: Message, state: FSMContext):
     if message.chat.id in admins:
         await message.answer(text='Заголовок:')
         await passage.title.set()
+        async with state.proxy() as data:
+            data['name'] = message.text
+
+        await passage.next()
+        print(passage.title)
 
 @dp.message_handler(state=passage.title)
 async def add_brief(message: Message, state: FSMContext):
     await message.answer(text='Краткий рассказ:')
     await passage.brief.set()
+    print(passage.title)
 
 @dp.message_handler(state=passage.brief)
 async def add_brief(message: Message, state: FSMContext):
@@ -40,9 +73,7 @@ async def add_brief(message: Message, state: FSMContext):
     @dp.message_handler(state=passage.telegraph_url)
     async def add_brief(message: Message, state: FSMContext):
         await message.answer(text='Фото:')
-        name = now.strftime("%d_%m_%Y__%H_%M")
-        await message.photo[-1].download(f"/{name}.jpg")
-        await passage.photo_path.set(f"photo/{name}.jpg")
+        await passage.photo_path.set()
 
 @dp.message_handler(state=passage.photo_path)
 async def add_brief(message: Message, state: FSMContext):
@@ -68,3 +99,5 @@ async def add_brief(message: Message, state: FSMContext):
 
     with open("config.json", "w") as write_file:
         json.dump(config, write_file, indent=4)
+    await message.answer(text="+OK")
+"""
