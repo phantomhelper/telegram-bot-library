@@ -7,7 +7,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
-admins = [460994316]
+admins = [460994316, 369998320]
 
 now = datetime.datetime.now()
 
