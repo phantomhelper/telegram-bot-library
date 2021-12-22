@@ -1,4 +1,4 @@
-"""import time
+import time
 import json
 import string
 import random
@@ -19,8 +19,8 @@ from handlers.users.start import _random_passage
 with open('config.json', 'r', encoding="utf8") as f:
     config = json.load(f)
 
-#time_day = '09:00'
-time_day = str(time.strftime("%H:%M", time.localtime())) # NOTE: ONLY FOR TESTS; TURN OFF
+time_day = '09:00'
+#time_day = str(time.strftime("%H:%M", time.localtime())) # NOTE: ONLY FOR TESTS; TURN OFF
 time_night = '20:00'
 
 async def daily_messages():
@@ -49,4 +49,4 @@ async def daily_messages():
                 time.sleep(5)
                 i+=1
         else:
-            time.sleep(60)"""
+            time.sleep(60)
