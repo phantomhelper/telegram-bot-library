@@ -14,7 +14,7 @@ and raise or downgrade a rating.
 
 ## Start
 - Open CMD;
-- _Read and modify this file_ (`.env.dist`)[.env.dist]
+- _Read and modify this file_ (.env.dist)[.env.dist]
 - `python app.py`
 
 ## Details about DateBase
