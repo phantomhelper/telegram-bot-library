@@ -35,11 +35,11 @@ and raise or downgrade a rating.
 
 
 ## Requirements
-- [Python 3.x](https://www.python.org/)
-- [MongoDB](https://www.mongodb.com/)
-- Installed [aiogram](https://github.com/aiogram/aiogram)
+- `Python 3.x`
+- `MongoDB`
+- Installed `aiogram`
 
 ## References
-- [aiogram](https://github.com/aiogram/aiogram)
-- [Empty bot structure](https://youtu.be/fob8oQOjB2Q)
+- https://github.com/aiogram/aiogram
+- Empty bot structure - https://youtu.be/fob8oQOjB2Q
 
