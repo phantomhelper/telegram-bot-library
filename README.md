@@ -34,7 +34,7 @@
 
 
 ## Требования
-- [`Python 3.x](https://www.python.org/)
+- [Python 3.x](https://www.python.org/)
 - [MongoDB](https://www.mongodb.com/)
 - Установлен [aiogram](https://github.com/aiogram/aiogram)
 
