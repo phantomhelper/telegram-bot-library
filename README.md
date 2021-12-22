@@ -34,11 +34,12 @@
 
 
 ## Требования
-- (`Python 3.x`)[https://www.python.org/]
-- (MongoDB)[https://www.mongodb.com/]
-- Установлен (`aiogram`)[https://github.com/aiogram/aiogram]
+- [`Python 3.x](https://www.python.org/)
+- [MongoDB](https://www.mongodb.com/)
+- Установлен [aiogram](https://github.com/aiogram/aiogram)
 
 ## Референсы
-- (aiogram)[https://github.com/aiogram/aiogram]
-- (Пустая структура проекта)[https://youtu.be/fob8oQOjB2Q]
+- [aiogram](https://github.com/aiogram/aiogram)
+- [Пустая структура проекта](https://github.com/Latand/aiogram-bot-template)
+- https://youtu.be/fob8oQOjB2Q
 
